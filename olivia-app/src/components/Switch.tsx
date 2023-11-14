@@ -1,25 +1,27 @@
-import { useState } from 'react';
+import React from "react";
 
-interface Props {
-    handler: Function
+interface SwitchProps {
+  isSleeping: boolean;
+  onSwitchChange: () => void;
 }
 
-const Switch = ({handler}:Props) => {
-    const [isOn, setIsOn] = useState(false);
+const Switch: React.FC<SwitchProps> = ({ isSleeping, onSwitchChange }) => {
+  const handleClick = () => {
+    onSwitchChange();
+  };
 
-    function handleClick() {
-        !isOn && handler(true) 
-        setIsOn((prevState)=>(!prevState));   
-    }
-
-    const classDivSwitch = `${isOn ? `bg-green-500`:`bg-slate-600`}`
-    const classSpanSwitch = `${isOn ? 'ml-10' : ''}`
+  const classDivSwitch = `w-20 h-10 rounded-full transition-all duration-300 cursor-pointer ${
+    isSleeping ? "bg-green-500" : "bg-slate-600"
+  }`;
+  const classSpanSwitch = `w-10 h-10 bg-white rounded-full transition-all duration-300 block ${
+    isSleeping ? "ml-10" : ""
+  }`;
 
   return (
-    <div onClick={handleClick} className={`w-20 h-10 rounded-full transition-all duration-300 cursor-pointer ${classDivSwitch}`}>
-        <span  className={`w-10 h-10 bg-white rounded-full transition-all duration-300 block ${classSpanSwitch}`}></span> 
+    <div onClick={handleClick} className={classDivSwitch}>
+      <span className={classSpanSwitch}></span>
     </div>
-  )
-}
+  );
+};
 
-export default Switch
+export default Switch;
